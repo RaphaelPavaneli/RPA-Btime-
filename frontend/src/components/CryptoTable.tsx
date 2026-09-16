@@ -37,12 +37,12 @@ function CryptoTable({criptomoedas, isLoading = false, error = null,}: CryptoTab
     
     if (criptomoedas.length === 0) {
     return (
-        <div className="mt-8 rounded-xl border border-dashed border-slate-700 bg-slate-900/50 px-6 py-12 text-center">
-            <h3 className="text-lg font-semibold text-slate-200">
+        <div className="mt-8 rounded-xl border border-dashed border-stone-300 bg-white px-6 py-12 text-center shadow-sm">
+            <h3 className="text-lg font-semibold text-stone-800">
             Nenhuma criptomoeda encontrada
             </h3>
 
-            <p className="mt-2 text-sm text-slate-400">
+            <p className="mt-2 text-sm text-stone-500">
             Atualize os dados ou selecione outra fonte de coleta.
             </p>
         </div>
