@@ -29,3 +29,21 @@ def coletar_e_exportar(
 
     arquivo = exportador.exportar(criptomoedas, destino)
     return len(criptomoedas), arquivo
+
+def coletar_criptomoedas(
+    coletor: ColetorCriptomoedas,
+    limite: int,
+) -> list[Criptomoeda]:
+    """Coordena apenas a coleta de criptomoedas."""
+
+    if not 1 <= limite <= 100:
+        raise ValueError("O limite deve estar entre 1 e 100.")
+
+    criptomoedas = coletor.coletar(limite)
+
+    if not criptomoedas:
+        raise RuntimeError(
+            "A fonte não retornou nenhuma criptomoeda válida."
+        )
+
+    return criptomoedas
