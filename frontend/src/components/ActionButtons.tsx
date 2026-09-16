@@ -5,14 +5,14 @@ function ActionButtons() {
         type="button"
         className="
           rounded-lg
-          border border-slate-700
-          bg-slate-900
+          border border-stone-300
+          bg-white
           px-4 py-2
           text-sm font-medium
-          text-slate-200
+          text-stone-700
+          shadow-sm
           transition
-          hover:border-slate-600
-          hover:bg-slate-800
+          hover:bg-stone-100
         "
       >
         Atualizar dados
@@ -22,12 +22,13 @@ function ActionButtons() {
         type="button"
         className="
           rounded-lg
-          bg-emerald-500
+          bg-amber-500
           px-4 py-2
           text-sm font-semibold
-          text-slate-950
+          text-white
+          shadow-sm
           transition
-          hover:bg-emerald-400
+          hover:bg-amber-600
         "
       >
         Baixar CSV
