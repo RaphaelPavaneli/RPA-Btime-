@@ -1,8 +1,15 @@
-function ActionButtons() {
+interface ActionButtonsProps {
+  onAtualizar: () => void;
+  isLoading: boolean;
+}
+
+function ActionButtons({ onAtualizar, isLoading }: ActionButtonsProps) {
   return (
     <div className="flex flex-wrap gap-3">
       <button
         type="button"
+        onClick={onAtualizar}
+        disabled={isLoading}
         className="
           rounded-lg
           border border-stone-300

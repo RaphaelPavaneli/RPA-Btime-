@@ -1,11 +1,43 @@
+import { useState } from "react";
+
 import Header from "../components/Header";
 import SourceSelector from "../components/SourceSelector";
 import ActionButtons from "../components/ActionButtons";
 import CryptoTable from "../components/CryptoTable";
-import { criptomoedasMock } from "../mocks/cryptocurrencies";
 
+import { buscarCriptomoedas } from "../services/cryptoService";
+
+import type { Criptomoeda } from "../types/crypto";
+
+type Fonte = "api" | "scraping";
 
 function Dashboard() {
+  const [fonte, setFonte] = useState<Fonte>("api");
+  const [criptomoedas, setCriptomoedas] = useState<Criptomoeda[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function carregarDados() {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const dados = await buscarCriptomoedas(fonte);
+
+      setCriptomoedas(dados);
+    } catch (erro) {
+      setCriptomoedas([]);
+
+      setError(
+        erro instanceof Error
+          ? erro.message
+          : "Erro inesperado ao carregar os dados.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-stone-50 text-stone-800">
       <Header />
@@ -20,14 +52,21 @@ function Dashboard() {
         </p>
 
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <SourceSelector />
-          <ActionButtons />
-
+          <SourceSelector
+            source={fonte}
+            onChange={setFonte}
+          />
+          <ActionButtons
+            onAtualizar={carregarDados}
+            isLoading={isLoading}
+          />
         </div>
 
-          <CryptoTable criptomoedas={criptomoedasMock} />
-          <CryptoTable criptomoedas={[]} isLoading={true} error={"Erro ao carregar dados"} />
-          <CryptoTable criptomoedas={[]} isLoading={false} error={"Erro ao consultar API"} />
+        <CryptoTable
+          criptomoedas={criptomoedas}
+          isLoading={isLoading}
+          error={error}
+        />
       </main>
     </div>
   );

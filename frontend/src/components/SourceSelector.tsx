@@ -1,15 +1,19 @@
-import { useState } from "react";
+type Fonte = "api" | "scraping";
 
-type Source = "api" | "scraping";
+interface SourceSelectorProps {
+  source: Fonte;
+  onChange: (source: Fonte) => void;
+}
 
-function SourceSelector() {
-  const [source, setSource] = useState<Source>("api");
-
+function SourceSelector({
+  source,
+  onChange,
+}: SourceSelectorProps) {
   return (
     <div className="flex w-fit rounded-lg border border-stone-200 bg-white p-1 shadow-sm">
       <button
         type="button"
-        onClick={() => setSource("api")}
+        onClick={() => onChange("api")}
         className={`rounded-md px-4 py-2 text-sm font-medium transition ${
           source === "api"
             ? "bg-amber-500 text-white shadow-sm"
@@ -21,7 +25,7 @@ function SourceSelector() {
 
       <button
         type="button"
-        onClick={() => setSource("scraping")}
+        onClick={() => onChange("scraping")}
         className={`rounded-md px-4 py-2 text-sm font-medium transition ${
           source === "scraping"
             ? "bg-amber-500 text-white shadow-sm"
