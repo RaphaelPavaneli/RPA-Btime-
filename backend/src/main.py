@@ -3,22 +3,28 @@ from fastapi import FastAPI
 from src.api.routers.criptomoedas import router as criptomoedas_router
 
 
-app = FastAPI(
-    title="CryptoData API",
-    description="API para coleta e consulta de dados de criptomoedas.",
-    version="1.0.0",
-)
+def create_app() -> FastAPI:
+    """Cria e configura a aplicação FastAPI."""
+
+    application = FastAPI(
+        title="CryptoData API",
+        version="1.0.0",
+        description="API para consulta e coleta de dados de criptomoedas.",
+    )
+
+    @application.get("/")
+    def health_check():
+        return {
+            "status": "ok",
+            "message": "CryptoData API está funcionando.",
+        }
+
+    application.include_router(
+        criptomoedas_router,
+        prefix="/api",
+    )
+
+    return application
 
 
-@app.get("/")
-def health_check():
-    return {
-        "status": "ok",
-        "message": "CryptoData API está funcionando.",
-    }
-
-
-app.include_router(
-    criptomoedas_router,
-    prefix="/api",
-)
+app = create_app()
