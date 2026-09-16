@@ -1,0 +1,2 @@
+"""Pontos de entrada executáveis."""
+

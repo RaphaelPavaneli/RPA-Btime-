@@ -1,0 +1,14 @@
+[project]
+name = "rpa-btime-criptomoedas"
+version = "0.1.0"
+description = "Coleta comparativa de criptomoedas por web scraping e API pública."
+requires-python = ">=3.11"
+dependencies = [
+    "beautifulsoup4==4.13.5",
+    "requests==2.32.5",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
