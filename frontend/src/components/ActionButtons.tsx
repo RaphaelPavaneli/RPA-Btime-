@@ -1,9 +1,10 @@
 interface ActionButtonsProps {
   onAtualizar: () => void;
+  onBaixarCsv: () => void;
   isLoading: boolean;
 }
 
-function ActionButtons({ onAtualizar, isLoading }: ActionButtonsProps) {
+function ActionButtons({ onAtualizar, onBaixarCsv, isLoading }: ActionButtonsProps) {
   return (
     <div className="flex flex-wrap gap-3">
       <button
@@ -27,6 +28,7 @@ function ActionButtons({ onAtualizar, isLoading }: ActionButtonsProps) {
 
       <button
         type="button"
+        onClick={onBaixarCsv}
         className="
           rounded-lg
           bg-amber-500

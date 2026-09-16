@@ -5,7 +5,7 @@ import SourceSelector from "../components/SourceSelector";
 import ActionButtons from "../components/ActionButtons";
 import CryptoTable from "../components/CryptoTable";
 
-import { buscarCriptomoedas } from "../services/cryptoService";
+import { buscarCriptomoedas, baixarCsv, } from "../services/cryptoService";
 
 import type { Criptomoeda } from "../types/crypto";
 
@@ -16,6 +16,20 @@ function Dashboard() {
   const [criptomoedas, setCriptomoedas] = useState<Criptomoeda[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  async function handleBaixarCsv() {
+    try {
+      setError(null);
+
+      await baixarCsv(fonte);
+    } catch (erro) {
+      setError(
+        erro instanceof Error
+          ? erro.message
+          : "Erro inesperado ao baixar o CSV.",
+      );
+    }
+  }
 
   async function carregarDados() {
     try {
@@ -58,6 +72,7 @@ function Dashboard() {
           />
           <ActionButtons
             onAtualizar={carregarDados}
+            onBaixarCsv={handleBaixarCsv}
             isLoading={isLoading}
           />
         </div>
