@@ -1,0 +1,2 @@
+"""Coletores de dados externos."""
+
