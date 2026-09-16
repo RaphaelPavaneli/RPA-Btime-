@@ -53,8 +53,7 @@ function CryptoTable({criptomoedas, isLoading = false, error = null,}: CryptoTab
         <div className="mt-8 overflow-x-auto rounded-xl border border-stone-200 bg-white shadow-sm">
         <table className="min-w-full text-left text-sm">
             <thead className="border-b border-stone-200 bg-amber-50/70">
-            <tr key={`${crypto.simbolo}-${crypto.posicao}`}
-                className="border-b border-stone-100 last:border-b-0 hover:bg-amber-50/40"
+            <tr className="border-b border-stone-100 last:border-b-0 hover:bg-amber-50/40"
             >
                 <th className="px-4 py-3">#</th>
                 <th className="px-4 py-3">Criptomoeda</th>
@@ -137,7 +136,7 @@ function CryptoTable({criptomoedas, isLoading = false, error = null,}: CryptoTab
                     </td>
                 </tr>
                 ))}
-                            </tbody>
+            </tbody>
         </table>
         </div>
     );
