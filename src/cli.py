@@ -12,7 +12,7 @@ def executar_cli(coletor: Any, nome_fonte: str, arquivo_padrao: str) -> int:
     parser = argparse.ArgumentParser(
         description=f"Coleta cotações da CoinLore por {nome_fonte} e gera um CSV."
     )
-    parser.add_argument("--limite", type=int, default=100, help="Quantidade de moedas (1 a 100).")
+    parser.add_argument("--limite", type=int, default=10, help="Quantidade de moedas (1 a 100).")
     parser.add_argument(
         "--saida",
         type=Path,
