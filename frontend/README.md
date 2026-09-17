@@ -1,75 +1,89 @@
-# React + TypeScript + Vite
+# CryptoData — frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface web da aplicação CryptoData. O frontend permite escolher a fonte de coleta,
+consultar criptomoedas e baixar o resultado em CSV.
 
-Currently, two official plugins are available:
+## Tecnologias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19;
+- TypeScript;
+- Vite;
+- Tailwind CSS;
+- ESLint.
 
-## React Compiler
+## Pré-requisitos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js `20.19` ou superior, ou `22.12` ou superior;
+- npm;
+- backend em execução em `http://127.0.0.1:8000`.
 
-## Expanding the ESLint configuration
+## Instalação
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Execute os comandos dentro da pasta `frontend`:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```powershell
+npm ci
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+O comando `npm ci` utiliza as versões registradas no `package-lock.json`, oferecendo
+uma instalação reproduzível.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Executar em desenvolvimento
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```powershell
+npm run dev
 ```
+
+Acesse http://127.0.0.1:5173.
+
+O frontend envia requisições para caminhos iniciados por `/api`. Durante o
+desenvolvimento, o proxy configurado no Vite encaminha essas requisições para
+`http://127.0.0.1:8000`.
+
+## Funcionalidades
+
+- seleção entre API pública e web scraping;
+- consulta das 10 primeiras criptomoedas;
+- apresentação de carregamento, resultado vazio e falha;
+- tabela responsiva com os dados normalizados;
+- download do CSV correspondente à fonte selecionada.
+
+## Estrutura principal
+
+```text
+src/
+├── components/  # Componentes reutilizáveis da interface
+├── pages/       # Composição das páginas
+├── services/    # Requisições para o backend
+├── types/       # Contratos TypeScript
+├── App.tsx
+└── main.tsx
+```
+
+O módulo `services/cryptoService.ts` concentra a comunicação HTTP. Os componentes
+visuais não precisam conhecer os detalhes dos endpoints do backend.
+
+## Comandos disponíveis
+
+```powershell
+npm run dev      # inicia o servidor de desenvolvimento
+npm run lint     # executa a análise estática
+npm run build    # valida o TypeScript e gera o build
+npm run preview  # visualiza localmente o build gerado
+```
+
+## Integração com o backend
+
+| Ação | Requisição |
+| --- | --- |
+| Consultar pela API | `GET /api/criptomoedas?fonte=api&limite=10` |
+| Consultar por scraping | `GET /api/criptomoedas?fonte=scraping&limite=10` |
+| Baixar CSV | `GET /api/criptomoedas/csv?fonte=<fonte>&limite=10` |
+
+Para executar a aplicação completa, consulte o `README.md` na raiz do repositório.
+
+## Limitações
+
+- o proxy atual é destinado ao desenvolvimento local;
+- o frontend depende do backend para consultar e exportar dados;
+- não há persistência local: uma nova consulta substitui os dados exibidos.
