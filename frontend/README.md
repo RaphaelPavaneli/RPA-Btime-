@@ -40,6 +40,27 @@ O frontend envia requisições para caminhos iniciados por `/api`. Durante o
 desenvolvimento, o proxy configurado no Vite encaminha essas requisições para
 `http://127.0.0.1:8000`.
 
+## Executar com Docker
+
+A partir da raiz do repositório, com o Docker Desktop iniciado:
+
+```powershell
+docker compose up --build
+```
+
+Acesse http://localhost:5173.
+
+O Dockerfile utiliza duas etapas:
+
+1. Node.js instala as dependências e gera o build com Vite.
+2. Nginx serve os arquivos estáticos e encaminha `/api` para o container do backend.
+
+Nesse modo, não é necessário executar `npm run dev`. Para encerrar os containers:
+
+```powershell
+docker compose down
+```
+
 ## Funcionalidades
 
 - seleção entre API pública e web scraping;

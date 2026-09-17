@@ -64,6 +64,9 @@ negócio não depende do FastAPI, do HTML, do JSON ou do formato CSV.
 - npm;
 - acesso à internet para consultar a CoinLore.
 
+Para a execução em containers, Docker Desktop com Docker Compose substitui a
+necessidade de instalar Python, Node.js e npm diretamente na máquina.
+
 ## Instalação do backend
 
 No primeiro terminal, a partir da raiz do repositório:
@@ -102,6 +105,40 @@ A interface ficará disponível em http://127.0.0.1:5173.
 
 Durante o desenvolvimento, o Vite encaminha as requisições iniciadas por `/api` para
 `http://127.0.0.1:8000`. Por isso, os dois serviços devem estar em execução.
+
+## Executar com Docker
+
+Com o Docker Desktop iniciado, execute na raiz do repositório:
+
+```powershell
+docker compose up --build
+```
+
+O Compose constrói e inicia dois serviços:
+
+- `backend`: API FastAPI publicada na porta `8000`;
+- `frontend`: build React servido pelo Nginx na porta `5173`.
+
+Acesse:
+
+- frontend: http://localhost:5173;
+- backend: http://localhost:8000;
+- Swagger: http://localhost:8000/docs.
+
+No container, o Nginx encaminha `/api` para o serviço `backend`. Essa configuração
+substitui o proxy do Vite usado pelo comando `npm run dev`.
+
+Para acompanhar os logs:
+
+```powershell
+docker compose logs -f
+```
+
+Para encerrar e remover os containers e a rede criada pelo Compose:
+
+```powershell
+docker compose down
+```
 
 ## Endpoints
 
@@ -146,6 +183,7 @@ npm run build
 - o scraping depende da estrutura HTML atual da CoinLore;
 - a aplicação não tenta contornar CAPTCHA ou mecanismos de proteção;
 - o proxy do Vite é destinado ao ambiente local de desenvolvimento;
+- os CSVs gerados dentro do container não persistem após sua remoção;
 - as cotações podem variar entre as duas coletas porque são obtidas em momentos
   diferentes.
 

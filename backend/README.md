@@ -61,6 +61,26 @@ A API ficará disponível em:
 - Swagger: http://127.0.0.1:8000/docs;
 - OpenAPI: http://127.0.0.1:8000/openapi.json.
 
+## Executar com Docker
+
+A partir da raiz do repositório, com o Docker Desktop iniciado:
+
+```powershell
+docker compose up --build
+```
+
+O serviço `backend` será construído com Python 3.11, instalará o
+`requirements.txt` e executará o Uvicorn em `0.0.0.0:8000`.
+
+Para encerrar os containers:
+
+```powershell
+docker compose down
+```
+
+Os CSVs criados durante a execução permanecem no sistema de arquivos do container e
+não são persistidos depois que ele é removido.
+
 ### Endpoints
 
 | Método | Endpoint | Descrição |
